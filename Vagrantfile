@@ -12,7 +12,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "template"
   config.vm.provision "puppet"
   config.vm.network :forwarded_port, host: HTTP_PORT, guest: 80
-  config.vm.synced_folder "app/", "/var/www/html/app", :owner=> 'apache', :group=>'apache'
   config.vm.synced_folder "phpMyAdmin/", "/var/www/html/phpMyAdmin"
   config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
   config.vm.provision "shell", inline: "echo Ready to serve pages at: http://localhost:#{HTTP_PORT}"
