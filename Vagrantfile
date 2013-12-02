@@ -5,7 +5,6 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-
   config.vm.box = "centos64"
   #config.vm.provision :shell, :path => "bootstrap.sh"
   config.vm.provision "puppet"
@@ -14,5 +13,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "phpMyAdmin/", "/var/www/html/phpMyAdmin"
   config.vm.hostname = "hostname"
   config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
-
+  config.vm.provision "shell", inline: "echo http://localhost:{forwarded_port}/app"
+  config.vm.provision "shell", inline: "echo A local mysql database named app is available, manage it with phpMyAdmin on http://localhost:{forwarded_port}/phpMyAdmin."
 end
