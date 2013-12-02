@@ -21,21 +21,25 @@ package { $phpextra:
 service { "httpd":
 	ensure => running,
 	require => Package["httpd"],
+	enable => true,
 }
 
 service { "mysqld":
 	ensure => running,
 	require => Package["mysql-server"],
+	enable => true,
 }
 
 service { "iptables":
 	ensure => stopped,
+	enable => false,
 }
 
 file { "/etc/httpd/conf.d/app.conf":
 	source => "/vagrant/app.conf",
 	notify => Service['httpd'],
 	require => Package["httpd"],
+	replace => false,
 }
 
 file { "/etc/php.d/local.ini":
