@@ -10,8 +10,14 @@ This is a development platform for PHP on CentOS 6.4.
 Usage
 =====
 1. Install vagrant and virtualbox.
-2. Edit the Vagrantfile and set a unique HTTP_PORT.
-3. Create the app/ directory.
+2. Edit the Vagrantfile and set a unique private IP address for the VM.
+3. Create the app/ directory. Thes contents of this directory will
+   served from /var/www/html in the VM.
 4. Run `vagrant up`.
-5. Read the prompt to see the location of the web application.
+5. There will be an NFS error on the first boot. Ignore it and run
+   `vagrant provision`, then `vagrant reload`. You have to do this
+   only once.
 6. Place your application files in app/.
+7. Read the output from `vagrant provision` on where to point your
+   browser.
+8. (Optional) Add /etc/hosts entries pointing at the VM's IP.
