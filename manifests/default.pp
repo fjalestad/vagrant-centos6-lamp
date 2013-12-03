@@ -46,6 +46,13 @@ service { "iptables":
 	enable => false,
 }
 
+file { "/etc/httpd/conf.d/00-vhost.conf":
+	source => "/vagrant/etc/00-vhost.conf",
+	notify => Service['httpd'],
+	require => Package["httpd"],
+	replace => false,
+}
+
 file { "/etc/httpd/conf.d/phpMyAdmin.conf":
 	source => "/vagrant/etc/phpMyAdmin.conf",
 	notify => Service['httpd'],
