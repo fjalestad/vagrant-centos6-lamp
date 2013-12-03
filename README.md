@@ -1,16 +1,20 @@
 vagrant-centos64-lamp
 =====================
 
-A ready-to-use vagrant template of a Centos 6.4 LAMP server for running Wordpress, Drupal, etc...
+A ready-to-use vagrant template of a Centos 6.4 LAMP server for running
+PHP applications like Drupal.
 
 What is this exactly?
 =====================
-This is a development platform for PHP on CentOS 6.4.
+This is a development platform for PHP on CentOS 6.4. It contains
+a configured phpMyAdmin for your convenience (user: root,
+password: NULL).
 
 Usage
 =====
 1. Install vagrant and virtualbox.
-2. Edit the Vagrantfile and set a unique private IP address for the VM.
+2. Edit the Vagrantfile and set a unique private IP address and a
+   hostname for this VM.
 3. Create the app/ directory. Thes contents of this directory will
    served from /var/www/html in the VM.
 4. Run `vagrant up`.
