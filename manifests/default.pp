@@ -4,19 +4,13 @@
  	source => "http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm"
  }
 
-$nfsutils = [ "nfs-utils" ]
-package {$nfsutils:
- 	ensure => installed,
-}
-
 $phpbase = [ "httpd", "php-pecl-apc", "php-mysql", "mysql-server", "php-cli", "php-gd", "php", "php-mbstring", "php-xml", "php-intl" ]
 
 package {$phpbase:
- 	ensure => installed,
- 	notify => Service['httpd'],
+ 	ensure => installed
 }
 
-$phpextra = [ "php-mcrypt", "php-pecl-xdebug", "phpMyAdmin"]
+$phpextra = [ "php-mcrypt", "php-pecl-xdebug", "phpMyAdmin", "php-drush-drush"]
 package { $phpextra:
 	ensure => installed,
 	require => Package["epel-release-6-8.noarch"],
@@ -32,12 +26,6 @@ service { "httpd":
 service { "mysqld":
 	ensure => running,
 	require => Package["mysql-server"],
-	enable => true,
-}
-
-service { "rpcbind":
-	ensure => running,
-	require => Package["nfs-utils"],
 	enable => true,
 }
 
