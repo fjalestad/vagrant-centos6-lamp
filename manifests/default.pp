@@ -10,7 +10,7 @@ package {$phpbase:
  	ensure => installed
 }
 
-$phpextra = [ "php-mcrypt", "php-pecl-xdebug", "phpMyAdmin", "php-drush-drush"]
+$phpextra = [ "php-mcrypt", "php-pecl-xdebug", "phpMyAdmin", "php-drush-drush", "ant"]
 package { $phpextra:
 	ensure => installed,
 	require => Package["epel-release-6-8.noarch"],
@@ -64,6 +64,12 @@ file { "/var/www/html":
 	require => Package["httpd"],
 }
 
+file { "/usr/bin/phpunit":
+	source => "/vagrant/bin/phpunit.phar",
+	mode => 0755,
+	require => Package["php"],
+}
+
 exec { "pmadb":
 	command => '/usr/bin/mysql -u root < /usr/share/phpMyAdmin/examples/create_tables.sql',
 	creates => '/var/lib/mysql/phpmyadmin',
@@ -85,11 +91,7 @@ package { "mod-pagespeed-stable":
     notify  => Service["httpd"],
 }
 
-exec{'retrieve_phpunit':
-  command => "/usr/bin/wget -q https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit",
-}
-
-file{'/usr/local/bin/phpunit':
-  mode => 0755,
-  require => Exec["retrieve_phpunit"],
+exec{'update_phpunit':
+  command => "/usr/bin/phpunit --self-update",
+  require => File["/usr/bin/phpunit"],
 }
