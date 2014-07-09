@@ -84,3 +84,12 @@ package { "mod-pagespeed-stable":
     require => [ Yumrepo["google_pagespeed"], Package["httpd"] ],
     notify  => Service["httpd"],
 }
+
+exec{'retrieve_phpunit':
+  command => "/usr/bin/wget -q https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit",
+}
+
+file{'/usr/local/bin/phpunit':
+  mode => 0755,
+  require => Exec["retrieve_phpunit"],
+}

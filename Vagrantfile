@@ -32,6 +32,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		vbox.customize ["modifyvm", :id, "--cpus", cpus]
 	end
 	config.vm.provision "shell", path: "provision.sh"
-	#config.vm.provision "shell", inline: "echo Ready to serve pages in www/ at: http://localhost:#{HTTP_PORT}"
-	#config.vm.provision "shell", inline: "echo phpMyAdmin is at: http://localhost:#{HTTP_PORT}/phpMyAdmin"
+	config.vm.provision "shell", inline: "echo Ready to serve pages in www/ at: http://localhost:#{HTTP_PORT}"
+	config.vm.provision "shell", inline: "echo phpMyAdmin is at: http://localhost:#{HTTP_PORT}/phpMyAdmin"
 end
