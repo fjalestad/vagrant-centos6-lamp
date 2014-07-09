@@ -44,7 +44,7 @@ file { "/etc/httpd/conf.d/00-vhost.conf":
 file { "/etc/httpd/conf.d/phpMyAdmin.conf":
 	source => "/vagrant/etc/phpMyAdmin.conf",
 	notify => Service['httpd'],
-	require => Package["httpd"],
+	require => [ Package["httpd"], Package["phpMyAdmin"] ],
 }
 
 file { "/etc/php.d/zz_local.ini":
@@ -56,6 +56,12 @@ file { "/etc/php.d/zz_local.ini":
 file { "/etc/phpMyAdmin/config.inc.php":
 	source => "/vagrant/etc/config.inc.php",
 	require => Package["phpMyAdmin"],
+}
+
+file { "/var/www/html":
+	owner => "vagrant",
+	group => "vagrant",
+	require => Package["httpd"],
 }
 
 exec { "pmadb":
