@@ -7,19 +7,9 @@ VAGRANTFILE_API_VERSION = "2"
 HTTP_PORT = 4567
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-	config.vm.box = "chef/centos-6.5"
+	config.vm.box = "puppetlabs/centos-6.5-64-puppet"
 	config.vm.hostname = "centos6"
 	config.vm.network "forwarded_port", guest: 80, host: HTTP_PORT
-	config.vm.synced_folder "html/", "/var/www/html", type: "rsync", create: true, rsync__exclude: [
-		".git/",
-		"sites/default/files/",
-		"sites/default/settings.php",
-		"app/bootstrap.php.cache",
-		"app/cache/",
-		"app/logs/",
-		".idea",
-	]
-	#config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210.box"
 	config.vm.provider "virtualbox" do |vbox|
 		host = RbConfig::CONFIG['host_os']
 		# Give VM 1/4 system memory & access to all cpu cores on the host
@@ -38,8 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		vbox.customize ["modifyvm", :id, "--memory", mem]
 		vbox.customize ["modifyvm", :id, "--cpus", cpus]
 	end
-	config.vm.provision "shell", path: "provision.sh"
+	config.vm.provision "puppet"
 	config.vm.provision "shell", inline: "echo phpMyAdmin is at: http://localhost:#{HTTP_PORT}/phpMyAdmin"
 	config.vm.provision "shell", inline: "echo Ready to serve pages in html/ at: http://localhost:#{HTTP_PORT}"
-	config.vm.provision "shell", inline: "echo Run vagrant rsync-auto to keep html/ in sync with the guest."
 end

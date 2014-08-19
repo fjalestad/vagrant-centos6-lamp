@@ -71,7 +71,7 @@ file { "/usr/bin/phpunit":
 }
 
 exec { "pmadb":
-	command => '/usr/bin/mysql -u root < /usr/share/phpMyAdmin/examples/create_tables.sql',
+	command => '/usr/bin/mysql -u root < /usr/share/doc/phpMyAdmin-4.0.10.1/examples/create_tables.sql',
 	creates => '/var/lib/mysql/phpmyadmin',
 	require => [ Service["mysqld"], Package["phpMyAdmin"] ],
 }
